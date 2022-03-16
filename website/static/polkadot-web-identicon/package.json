@@ -1,0 +1,11 @@
+{
+  "name": "polkadot-web-identicon",
+  "version": "1.0.5-rc2",
+  "description": "A generic identity icon that can render Substrate based chains icons for  html/javascript frontend applications",
+  "main": "main.js",
+  "author": "Mor GUEYE <gueyemor2009@gmail.com>",
+  "repository": {
+    "url": "https://github.com/RidOne-technologies/polkadot-web-identicon.git"
+  },
+  "license": "Apache-2.0"
+}
