@@ -1,4 +1,4 @@
-body{margin-top:20px;}
+body{margin:20px;}
 
 .chat-online {
     color: #34ce57
@@ -11,9 +11,7 @@ body{margin-top:20px;}
 .chat-messages {
     display: flex;
     flex-direction: column;
-    height: 75vh;
-    /* width: 100%; */
-    /* max-height: 600px; */
+    height: 80vh;
     overflow: scroll;
 }
 ::-webkit-scrollbar {
@@ -39,6 +37,15 @@ body{margin-top:20px;}
     width: 70%;
     flex-direction: row-reverse;
     margin-left: auto
+}
+
+.chat-message {
+    width: auto;
+    max-width: 40%;
+    overflow-wrap: anywhere;
+    position: relative;
+    align-self: center;
+    text-align: center;
 }
 
 .py-3 {

@@ -32,3 +32,4 @@ def send(data):
     db.session.commit()
     emit('new_message', {'msg': new_message.data, 'time': str(new_message.date.time())[0:5], 'current_user': new_message.sender_id, 'sender': new_message.sender, 'i': h(new_message.sender+new_message.sender_id)}, room=h(current_user.dept_id))
 
+
