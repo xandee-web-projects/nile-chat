@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, json
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user
 from flask_socketio import SocketIO, send, emit, join_room
@@ -8,6 +8,11 @@ DB_NAME = "database.db"
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hjshjhdjah kjshkjdhjs'
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
+
+def load_file(file_name="accounts.json"):
+    with open(file_name) as json_file:
+        data = json.load(json_file)
+        return data
 
 def create_app():
     db.init_app(app)

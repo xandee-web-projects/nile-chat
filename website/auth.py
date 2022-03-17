@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from .models import User, Chat
-from . import db
+from . import db, load_file
 from flask_login import login_user, login_required, logout_user, current_user
 import requests as req
 from .hash import hsh, h
@@ -25,7 +25,7 @@ def login():
                 user = User(student_id, hsh(int(student_id)))
                 db.session.add(user)
                 if not Chat.query.get(user.dept_id):
-                    group = Chat(id=user.dept_id, name="Mechatronics Engineering "+student_id[0:2], room=h(user.dept_id))
+                    group = Chat(id=user.dept_id, name=load_file()[str(user.dept_id)[3:]]+" "+student_id[0:2], room=h(user.dept_id))
                     db.session.add(group)
                 db.session.commit()
             if current_user.is_authenticated:
