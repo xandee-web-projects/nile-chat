@@ -20,6 +20,14 @@ body{margin:20px;}
 .send-bar {
     bottom: 0px;
 }
+.usernames {
+    border: none;
+    color: white;
+    background: transparent;
+}
+.usernames:focus{
+    border: none;
+}
 
 .chat-message-left,
 .chat-message-right {

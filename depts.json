@@ -1,12 +1,14 @@
 {
-    "1605": "Mechatronics",
-    "0001": "Medicine",
-    "1402": "Law",
-    "1212": "Software guys",
-    "1204": "E and E and E",
-    "1500": "Human Anatomy",
-    "1203": "Computer Eng",
-    "1103": "Computer Sci",
-    "1205": "Petroleum and gas",
-    "1307": "Mass Com"
+    "1605": {"name": "Mechatronics", "abbr": "MCE"},
+    "0001": {"name": "Medicine", "abbr": ""},
+    "1402": {"name": "Law", "abbr": ""},
+    "1212": {"name": "Software guys", "abbr": ""},
+    "1204": {"name": "E and E and E ", "abbr": "EEE"},
+    "1500": {"name": "Human Anatomy", "abbr": ""},
+    "1203": {"name": "Computer Eng", "abbr": "CPE"},
+    "1103": {"name": "Computer Sci", "abbr": ""},
+    "1205": {"name": "Petroleum and gas", "abbr": ""},
+    "1307": {"name": "Mass Comm", "abbr": ""},
+    "1213": {"name": "Info Tech", "abbr": "IT"},
+    "1602": {"name": "Criminology", "abbr": ""}
 }

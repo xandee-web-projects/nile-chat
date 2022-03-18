@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Message, Chat
+from .models import Message, Chat, User
 from . import db, emit, socketio, join_room
 from .hash import hsh, h
 
@@ -11,6 +11,9 @@ views = Blueprint('views', __name__)
 def chat():
     if not current_user.username:
         return redirect(url_for('auth.choose_username'))
+    users = []
+    for i in User.query.filter_by(dept_id=current_user.dept_id).all():
+        users.append(i.username)
     return render_template('chat-app.html', current_user_id=hsh(current_user.identity), group=Chat.query.get(current_user.dept_id))
 
 @socketio.on('online', namespace='/chat')
@@ -21,8 +24,9 @@ def isonline():
     for i in get_chat:
         messages.append({"msg": i.data, "time": str(i.date.time())[0:5], "is_sender": i.sender_id==hsh(current_user.identity), "sender": i.sender, "i": h(i.sender+i.sender_id)})
     join_room(h(current_user.dept_id))
-    emit('get_messages', {"messages": messages})
-    emit("general_message", {"msg": current_user.username +" don showw"})
+    if len(messages) > 0:
+        emit('get_messages', messages)
+    # emit("general_message", {"msg": current_user.username +" is online"}, room=h(current_user.dept_id))
 
 @socketio.on('send', namespace='/chat')
 @login_required

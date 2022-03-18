@@ -4,7 +4,7 @@ from . import db, load_file
 from flask_login import login_user, login_required, logout_user, current_user
 import requests as req
 from .hash import hsh, h
-
+ 
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -25,7 +25,8 @@ def login():
                 user = User(student_id, hsh(int(student_id)))
                 db.session.add(user)
                 if not Chat.query.get(user.dept_id):
-                    group = Chat(id=user.dept_id, name=load_file()[str(user.dept_id)[3:]]+" "+student_id[0:2], room=h(user.dept_id))
+                    dept = load_file()[str(user.dept_id)[2:]]
+                    group = Chat(id=user.dept_id, abbr=dept['abbr'], name=dept['name']+" "+student_id[0:2], room=h(user.dept_id))
                     db.session.add(group)
                 db.session.commit()
             if current_user.is_authenticated:

@@ -14,6 +14,7 @@ class Chat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     room = db.Column(db.String(64))
     name = db.Column(db.String(64))
+    abbr = db.Column(db.String(6))
     messages = db.relationship('Message')
 
 class User(db.Model, UserMixin):
