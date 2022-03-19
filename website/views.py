@@ -16,6 +16,15 @@ def chat():
         users.append(i.username)
     return render_template('chat-app.html', current_user_id=hsh(current_user.identity), group=Chat.query.get(current_user.dept_id))
 
+@views.route('/admin', methods=['GET', 'POST'])
+@login_required
+def admin():
+    if current_user.id != 211605045:
+        return redirect(url_for('views.chat'))
+
+    return render_template('admin.html')
+
+
 @socketio.on('online', namespace='/chat')
 @login_required
 def isonline():

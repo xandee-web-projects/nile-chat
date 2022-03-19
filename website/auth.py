@@ -7,6 +7,18 @@ from .hash import hsh, h
  
 auth = Blueprint('auth', __name__)
 
+def get_dept_name(res):
+    str_to_find = 'Department</td><td bgcolor="#F4F5F7">'
+    idx = res.find(str_to_find)+len(str_to_find)
+    text = res[idx:idx+40].replace("</td></tr>", "")
+    depts = load_file('departments.json')
+    dept_name = None
+    for i in depts:
+        n = i.split()[0]
+        if text.startswith(n):
+            dept_name = text
+            return dept_name
+
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
@@ -15,18 +27,12 @@ def login():
         r = req.post("http://www.sis.nileuniversity.edu.ng/my/loginAuth.php", data={"username": student_id, "password": password, "LogIn": "LOGIN"})
         res = r.content.decode()
         if res.find("incorrect") == -1:
-            # str_to_find = '<h4 class="card-title m-t-10">'
-            # idx = res.find(str_to_find)+len(str_to_find)
-            # new_sub_str = res[idx:idx+100].replace("</h4>", "")
-            # all_names = new_sub_str.split()
-            # name = all_names[0] + " " + all_names[2]
             user = User.query.get(student_id)
             if not user:
                 user = User(student_id, hsh(int(student_id)))
                 db.session.add(user)
                 if not Chat.query.get(user.dept_id):
-                    dept = load_file()[str(user.dept_id)[2:]]
-                    group = Chat(id=user.dept_id, abbr=dept['abbr'], name=dept['name']+" "+student_id[0:2], room=h(user.dept_id))
+                    group = Chat(id=user.dept_id, name=get_dept_name(res)+" "+student_id[0:2], room=h(user.dept_id))
                     db.session.add(group)
                 db.session.commit()
             if current_user.is_authenticated:
