@@ -41,5 +41,3 @@ def create_database(app):
 
 socketio = SocketIO(app, debug=True)
 app = create_app()
-
-
