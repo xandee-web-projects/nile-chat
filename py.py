@@ -25,5 +25,4 @@ for i in depts:
     if text.startswith(n):
         dept_name = text
         break
-if dept_name:    
 

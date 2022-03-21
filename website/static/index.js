@@ -1,8 +1,6 @@
-Notification.requestPermission().then(function(result) {
-  console.log(result);
-});
+Notification.requestPermission();
 
-function send_message(text) {
+function send_message() {
 	text = $("#message_holder").val();
 	if (text.replace(" ", "") != "") {
 		$("#message_holder").val("");
@@ -11,7 +9,7 @@ function send_message(text) {
 	}
 }
 $("#send_message").click(function (e) {
-	send_message(text);
+	send_message();
 });
 $("#logout").click(function (e) {
 	var yes = confirm("You will be logged out");
@@ -24,6 +22,5 @@ $("#logout").click(function (e) {
 
 $("#message_holder").keydown(function (event) {
 	if (event.which == 13) {
-		send_message();
-	} else if (event.key == "@") {}
+		send_message();}
 });

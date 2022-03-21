@@ -26,9 +26,7 @@ function msg_text(msg, is_sender, name) {
             </div>`;
 }
 $(document).ready(function () {
-	socket = io.connect(
-		"http://" + document.domain + ":" + location.port + "/chat"
-	);
+	socket = io("http://" + document.domain + ":" + location.port + "/chat");
 	socket.on("connect", function () {
 		socket.emit("online");
 	});
@@ -62,5 +60,12 @@ $(document).ready(function () {
 		const name = is_sender ? "You" : msg.sender;
 		$("#chat").append(msg_text(msg, is_sender, name));
 		$("#chat").children().slice(-1)[0].scrollIntoView();
+		$(".usernames").each((idx, obj) => {
+			obj.addEventListener("click", (e) => {
+				$("#message_holder").val(
+					$("#message_holder").val() + "@" + obj.innerHTML + " "
+				);
+			});
+		});
 	});
 });

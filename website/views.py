@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, jsonify, render_template, redirect, url_for, request, json
 from flask_login import login_required, current_user
 from .models import Message, Chat, User
 from . import db, emit, socketio, join_room
@@ -21,9 +21,25 @@ def chat():
 def admin():
     if current_user.id != 211605045:
         return redirect(url_for('views.chat'))
+    return render_template('admin.html', groups=Chat.query.all())
 
-    return render_template('admin.html')
+@views.route("/general_message", methods=['POST'])
+@login_required
+def send_gen_message():
+    if current_user.id != 211605045:
+        return redirect(url_for('views.chat'))
+    data = json.loads(request.data)
+    dept_id = int(data['dept_id'])
+    msg = data['msg']
+    emit("general_message", {"msg": msg}, room=h(dept_id), namespace="/chat")
+    return jsonify({})
 
+@views.route('/edit', methods=['GET', 'POST'])
+@login_required
+def edit():
+    if current_user.id != 211605045:
+        return redirect(url_for('views.chat'))
+    return render_template('edit.html', groups=Chat.query.all())
 
 @socketio.on('online', namespace='/chat')
 @login_required
@@ -35,7 +51,7 @@ def isonline():
     join_room(h(current_user.dept_id))
     if len(messages) > 0:
         emit('get_messages', messages)
-    # emit("general_message", {"msg": current_user.username +" is online"}, room=h(current_user.dept_id))
+
 
 @socketio.on('send', namespace='/chat')
 @login_required
