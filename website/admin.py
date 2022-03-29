@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify, render_template, redirect, url_for, request, json
 from flask_login import login_required, current_user
-from .models import Message, Chat, User
-from . import db, emit, socketio, join_room
-from .hash import hsh, h
+from .models import Chat
+from . import db, emit
+from .hash import h
 
 admin = Blueprint('admin', __name__)
 
