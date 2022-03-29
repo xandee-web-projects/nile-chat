@@ -12,7 +12,6 @@ class Message(db.Model):
 
 class Chat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    room = db.Column(db.String(64))
     name = db.Column(db.String(64))
     abbr = db.Column(db.String(6))
     messages = db.relationship('Message')
@@ -23,9 +22,9 @@ class User(db.Model, UserMixin):
     identity = db.Column(db.String(64))
     dept_id = db.Column(db.Integer)
 
-    def __init__(self, _id, _identity) -> None:
+    def __init__(self, _id, _dept_id, _identity) -> None:
         self.id = _id
-        self.dept_id = int(_id[0:6])
+        self.dept_id = _dept_id
         self.identity = _identity
 
 

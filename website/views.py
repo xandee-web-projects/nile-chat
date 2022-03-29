@@ -9,11 +9,8 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def chat():
-    if not current_user.username:
+    if not current_user.username or current_user.username == "":
         return redirect(url_for('auth.choose_username'))
-    users = []
-    for i in User.query.filter_by(dept_id=current_user.dept_id).all():
-        users.append(i.username)
     return render_template('chat-app.html', current_user_id=hsh(current_user.identity), group=Chat.query.get(current_user.dept_id))
 
 @socketio.on('online', namespace='/chat')
@@ -34,6 +31,6 @@ def send(data):
     new_message = Message(data=data['message'], sender_id=hsh(current_user.identity), sender=current_user.username, chat_id=current_user.dept_id)
     db.session.add(new_message)
     db.session.commit()
-    emit('new_message', {'msg': new_message.data, 'time': str(new_message.date.time())[0:5], 'current_user': new_message.sender_id, 'sender': new_message.sender, 'i': h(new_message.sender+new_message.sender_id)}, room=h(current_user.dept_id))
+    emit('new_message', {'msg': new_message.data, 'time': str(new_message.date.time())[0:5], 'current_user': new_message.sender_id, 'sender': new_message.sender, 'i': h(new_message.sender+new_message.sender_id)}, room=current_user.dept_id)
 
 

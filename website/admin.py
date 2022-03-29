@@ -2,7 +2,6 @@ from flask import Blueprint, jsonify, render_template, redirect, url_for, reques
 from flask_login import login_required, current_user
 from .models import Chat
 from . import db, emit
-from .hash import h
 
 admin = Blueprint('admin', __name__)
 
@@ -19,9 +18,9 @@ def send_gen_message():
     if current_user.id != 211605045:
         return redirect(url_for('admin/admin.chat'))
     data = json.loads(request.data)
-    dept_id = int(data['dept_id'])
+    dept_id = data['dept_id']
     msg = data['msg']
-    emit("general_message", {"msg": msg}, room=h(dept_id), namespace="/chat")
+    emit("general_message", {"msg": msg}, room=dept_id, namespace="/chat")
     return jsonify({})
 
 @admin.route('/edit', methods=['GET', 'POST'])
