@@ -20,7 +20,7 @@ def isonline():
     get_chat = Message.query.filter_by(chat_id=current_user.dept_id).order_by(Message.id.desc()).limit(20).all()
     for i in get_chat:
         messages.append({"msg": i.data, "time": str(i.date.time())[0:5], "is_sender": i.sender_id==hsh(current_user.identity), "sender": i.sender, "i": h(i.sender+i.sender_id)})
-    join_room(h(current_user.dept_id))
+    join_room(current_user.dept_id)
     if len(messages) > 0:
         emit('get_messages', messages)
 

@@ -24,6 +24,7 @@ body{margin:20px;}
 .send-bar {
     bottom: 0px;
 }
+
 .usernames {
     border: none;
     color: white;
@@ -53,7 +54,8 @@ body{margin:20px;}
 
 .chat-message {
     width: auto;
-    max-width: 40%;
+    max-width: 60%;
+    color: skyblue;
     overflow-wrap: anywhere;
     position: relative;
     align-self: center;

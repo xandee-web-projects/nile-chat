@@ -9,7 +9,7 @@ function msg_text(msg, is_sender, name) {
 	const c = is_sender ? "r" : "l";
 	const style = is_sender ? " style='text-align: right;'" : "";
 	return `<div class="chat-message-${sent} pb-4">
-                <div>
+                <d/iv>
                     <polkadot-web-identicon style="display: inline-block;" address="${
 											msg.i
 										}" theme="jdenticon" class="rounded-circle mr-1" size="40"></polkadot-web-identicon>
@@ -19,7 +19,7 @@ function msg_text(msg, is_sender, name) {
                 </div>
                 <div class="flex-shrink-1 bg-dark rounded py-2 px-3 m${c}-3">
                 <div ${style}><button class="usernames font-weight-bold mb-1" style="color: ${random_color(
-		name
+		name 
 	)}">${name}</button></div>
                     ${msg.msg}
                 </div>
@@ -33,10 +33,11 @@ $(document).ready(function () {
 	socket.on("general_message", function (msg) {
 		$("#chat").append(
 			`<div class="chat-message pb-4">
-                <div class="flex-shrink-1 bg-dark rounded py-2 px-3">
-                    ${msg.msg}
-                </div>
-            </div>`
+				<div class="flex-shrink-1 bg-dark rounded py-2 px-3">
+					<div>-Anonymous chat</div>
+				${msg.msg}
+			</div>
+		</div>`
 		);
 	});
 	socket.on("get_messages", function (msgs) {

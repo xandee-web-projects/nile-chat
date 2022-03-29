@@ -28,7 +28,7 @@
                       <td>
                         <div class="d-flex px-2 py-1">
                           <div>
-                            <polkadot-web-identicon style="display: inline-block;" address="{{ group.room }}" theme="jdenticon" class="rounded-circle mr-1" size="40"></polkadot-web-identicon>
+                            <polkadot-web-identicon style="display: inline-block;" address="{{ group.id }}" theme="jdenticon" class="rounded-circle mr-1" size="40"></polkadot-web-identicon>
                           </div>
                           <div class="d-flex flex-column justify-content-center">
                             <h6 class="mb-0 text-sm">{{ group.name }}</h6>
@@ -47,7 +47,7 @@
                             <span class="text-secondary text-xs font-weight-bold">
                               <input type="text" class="form-control" id="{{ group.id }}" placeholder="Send message ...">
                             </span>
-                            <button class="btn btn-primary" onclick="send_general_message({{ group.id }})" id="send_message"><i class="fa fa-send" aria-hidden="true"></i></button>
+                            <button class="btn btn-primary" onclick="send_general_message('{{ group.id }}')" id="send_message"><i class="fa fa-send" aria-hidden="true"></i></button>
                           </div>
                       </td>
                     </tr>
@@ -66,14 +66,17 @@
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{ url_for('static', filename='js/material-dashboard.min.js') }}"></script>
   <script>
+    var socket;
+    $(document).ready(function () {
+      socket = io("http://" + document.domain + ":" + location.port + "/chat");
+    })
     function send_general_message(id){
-      const msg = $("#"+id).val()+" -anonymous chat";
-      fetch("/admin/general_message", {
-        method: "POST",
-        body: JSON.stringify({ msg: msg, dept_id: id }),
-        }).then((_res) => {
-          window.location.href = "/admin";
-        });
+      const msg_holder = $("#"+id);
+      var text = msg_holder.val();
+      if (text.replace(" ", "") != "") {
+        msg_holder.val("");
+        socket.emit("gen_msg", { message: text, dept_id: id });
+      }
     }
   </script>
 {% endblock %}

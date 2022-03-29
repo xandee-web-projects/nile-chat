@@ -32,7 +32,7 @@ def login():
         if res.find("incorrect") == -1:
             user = User.query.get(student_id)
             if not user:
-                dept_name = get_dept_name(res)+" "+str(date.today().year-int(get_level(res)))
+                dept_name = get_dept_name(res)+" "+str(date.today().year-int(get_level(res)))[2:]
                 user = User(student_id, h(dept_name), hsh(int(student_id)))
                 db.session.add(user)
                 if not Chat.query.get(user.dept_id):

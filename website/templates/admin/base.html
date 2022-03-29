@@ -12,7 +12,7 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
   <!-- Nucleo Icons -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+  
   <link href="{{ url_for('static', filename='css/nucleo-icons.css') }}" rel="stylesheet" />
   <link href="{{ url_for('static', filename='css/nucleo-svg.css') }}" rel="stylesheet" />
   <!-- Font Awesome Icons -->
@@ -33,6 +33,12 @@
 			type="text/javascript"
 			src="{{ url_for('static', filename='polkadot-web-identicon/runtime.js') }}"
 		></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"
+			integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ=="
+			crossorigin="anonymous"
+		></script>
+		<link rel="icon" href="{{ url_for('static', filename='icon.png') }}" />
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
