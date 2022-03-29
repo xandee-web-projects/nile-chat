@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, render_template, redirect, url_for, request, json
+from flask import Blueprint, render_template, redirect, url_for, request, json
 from flask_login import login_required, current_user
 from .models import Message, Chat, User
 from . import db, emit, socketio, join_room
@@ -15,31 +15,6 @@ def chat():
     for i in User.query.filter_by(dept_id=current_user.dept_id).all():
         users.append(i.username)
     return render_template('chat-app.html', current_user_id=hsh(current_user.identity), group=Chat.query.get(current_user.dept_id))
-
-@views.route('/admin', methods=['GET', 'POST'])
-@login_required
-def admin():
-    if current_user.id != 211605045:
-        return redirect(url_for('views.chat'))
-    return render_template('admin.html', groups=Chat.query.all())
-
-@views.route("/general_message", methods=['POST'])
-@login_required
-def send_gen_message():
-    if current_user.id != 211605045:
-        return redirect(url_for('views.chat'))
-    data = json.loads(request.data)
-    dept_id = int(data['dept_id'])
-    msg = data['msg']
-    emit("general_message", {"msg": msg}, room=h(dept_id), namespace="/chat")
-    return jsonify({})
-
-@views.route('/edit', methods=['GET', 'POST'])
-@login_required
-def edit():
-    if current_user.id != 211605045:
-        return redirect(url_for('views.chat'))
-    return render_template('edit.html', groups=Chat.query.all())
 
 @socketio.on('online', namespace='/chat')
 @login_required

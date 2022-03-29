@@ -12,12 +12,10 @@ def get_dept_name(res):
     idx = res.find(str_to_find)+len(str_to_find)
     text = res[idx:idx+40].replace("</td></tr>", "")
     depts = load_file('departments.json')
-    dept_name = None
     for i in depts:
         n = i.split()[0]
         if text.startswith(n):
-            dept_name = text
-            return dept_name
+            return i
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():

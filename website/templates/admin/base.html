@@ -48,7 +48,7 @@
     <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link active text-white " href="../pages/dashboard.html">
+          <a class="nav-link text-white " href="{{ url_for('admin._admin') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">dashboard</i>
             </div>
@@ -56,7 +56,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white bg-gradient-primary" href="{{ url_for('views.edit') }}">
+          <a class="nav-link text-white bg-gradient-primary" href="{{ url_for('admin.edit') }}">
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               <i class="material-icons opacity-10">table_view</i>
             </div>
@@ -74,90 +74,19 @@
           <li class="nav-item d-flex align-items-center">
             <a href="{{ url_for('auth.logout') }}" class="nav-link text-body font-weight-bold px-0">
               <i class="fa fa-user me-sm-1"></i>
-              <span class="d-sm-inline d-none">Logout</span>
+              <span class="d-sm-inline">Logout</span>
             </a>
           </li>
         </ul>
-        </div>
       </div>
     </nav>
     <!-- End Navbar -->
-    <div class="container-fluid py-4">
-      <div class="row">
-        <div class="col-12">
-          <div class="card my-4">
-            <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
-              <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                <h6 class="text-white text-capitalize ps-3">Group chats</h6>
-              </div>
-            </div>
-            <div class="card-body px-0 pb-2">
-              <div class="table-responsive p-0">
-                <table class="table align-items-center mb-0">
-                  <thead>
-                    <tr>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Group</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Total Messages</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Messages (30 mins)</th>
-                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Send message</th>
-                      <!-- <th class="text-secondary opacity-7"></th> -->
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for group in groups %}
-                    <tr>
-                      <td>
-                        <div class="d-flex px-2 py-1">
-                          <div>
-                            <polkadot-web-identicon style="display: inline-block;" address="{{ group.room }}" theme="jdenticon" class="rounded-circle mr-1" size="40"></polkadot-web-identicon>
-                          </div>
-                          <div class="d-flex flex-column justify-content-center">
-                            <h6 class="mb-0 text-sm">{{ group.name }}</h6>
-                            <p class="text-xs text-secondary mb-0">{{ group.id }}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td>
-                        <p class="text-xs text-secondary mb-0">{{ group.messages|length }}</p>
-                      </td>
-                      <td class="align-middle text-center text-sm">
-                        <span class="badge badge-sm bg-gradient-success">{{ group.messages|length }}</span>
-                      </td>
-                      <td class="align-middle text-center">
-                          <div class="input-group input-group-outline mb-3">
-                            <span class="text-secondary text-xs font-weight-bold">
-                              <input type="text" class="form-control" id="{{ group.id }}" placeholder="Send message ...">
-                            </span>
-                            <button class="btn btn-primary" onclick="send_general_message({{ group.id }})" id="send_message"><i class="fa fa-send" aria-hidden="true"></i></button>
-                          </div>
-                      </td>
-                    </tr>
-                    {% endfor %}                    
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    {% block content %}{% endblock %}
   </main>
-  
   <!-- Github buttons -->
   <script async defer src="https://buttons.github.io/buttons.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{ url_for('static', filename='js/material-dashboard.min.js') }}"></script>
-  <script>
-    function send_general_message(id){
-      const msg = $("#"+id).val()+" -anonymous chat";
-      fetch("/general_message", {
-        method: "POST",
-        body: JSON.stringify({ msg: msg, dept_id: id }),
-        }).then((_res) => {
-          window.location.href = "/admin";
-        });
-    }
-  </script>
 </body>
 
 </html>

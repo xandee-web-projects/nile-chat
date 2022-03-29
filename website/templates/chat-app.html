@@ -34,6 +34,7 @@
 			rel="stylesheet"
 			href="{{ url_for('static', filename='chat-style.css') }}"
 		/>
+		<link rel="icon" href="{{ url_for('static', filename='icon.png') }}" />
 	</head>
 	<body class="bootstrap-dark">
 		<main class="content">
@@ -74,6 +75,9 @@
 								id="message_holder"
 								placeholder="Type your message"
 							/>
+							<button class="btn btn-dark fa fa-picture-o" id="send_pic">
+								<input type="file" name="file" id="image-upload" />
+							</button>
 							<button class="btn btn-primary" id="send_message">
 								Send <i class="fa fa-send" aria-hidden="true"></i>
 							</button>

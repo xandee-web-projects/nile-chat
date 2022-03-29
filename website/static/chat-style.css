@@ -8,6 +8,10 @@ body{margin:20px;}
     color: #e4606d
 }
 
+#image-upload {
+    display: none;
+}
+
 .chat-messages {
     display: flex;
     flex-direction: column;
