@@ -8,8 +8,15 @@ body{margin:20px;}
     color: #e4606d
 }
 
-#image-upload {
-    display: none;
+label input {
+    position: absolute;
+    top: -2px;
+    left: -700px;
+}
+
+.responsive{
+    width: 100%;
+    height: auto;
 }
 
 .chat-messages {

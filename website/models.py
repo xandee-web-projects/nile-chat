@@ -2,11 +2,13 @@ from . import db
 from flask_login import UserMixin
 from sqlalchemy.sql import func
 
+
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(10000))
     sender = db.Column(db.String(32))
     sender_id = db.Column(db.String(32))
+    is_img = db.Column(db.Boolean, default=False)
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'))
 
