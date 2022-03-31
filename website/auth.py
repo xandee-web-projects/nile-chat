@@ -61,6 +61,9 @@ def choose_username():
         if len(username) < 3:
             flash("This username is short like you", 'danger')
             return redirect(url_for('auth.choose_username'))
+        if len(username) > 26:
+            flash("The username no long for your eye ??", 'danger')
+            return redirect(url_for('auth.choose_username'))
         if User.query.filter(db.and_(User.username==username, User.dept_id==current_user.dept_id, User.id!=current_user.id)).first():
             flash("Some other guy has taken that name", 'danger')
             return redirect(url_for('auth.choose_username'))

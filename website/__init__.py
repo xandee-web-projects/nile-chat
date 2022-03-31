@@ -1,4 +1,4 @@
-from flask import Flask, json
+from flask import Flask, json, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_socketio import SocketIO, emit, join_room, send
@@ -15,6 +15,9 @@ def load_file(file_name="depts.json"):
         data = json.load(json_file)
         return data
 
+def page_not_found(e):
+  return render_template('404.html'), 404
+
 def create_app():
     db.init_app(app)
 
@@ -27,6 +30,8 @@ def create_app():
     app.register_blueprint(admin, url_prefix='/admin')
 
     create_database(app)
+    app.register_error_handler(404, page_not_found)
+    
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
