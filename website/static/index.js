@@ -27,19 +27,20 @@ $("#message_holder").keydown(function (event) {
 });
 
 $('#imageupload').bind('change', async function (event) {
+	$("#progress-ui").css("display", "block");
 	const imageFile = event.target.files[0];
 	const options = {
-	  maxSizeMB: 3,
-	  maxWidthOrHeight: 600,
+		maxSizeMB: 3,
+		maxWidthOrHeight: 600,
 	  useWebWorker: true
 	}
 	try {
-	  const compressedFile = await imageCompression(imageFile, options);
+		const compressedFile = await imageCompression(imageFile, options);
 	  await readThenSendFile(compressedFile); //readin the compressed file
 	} catch (error) {
 	  await readThenSendFile(imageFile); // if filetype is not image then sent orignal data without compression
 	}	
-
+	
 });
 
 function readThenSendFile(data) {
@@ -53,6 +54,9 @@ function readThenSendFile(data) {
   reader.onprogress = function (currentFile) {
 	if (currentFile.lengthComputable) {
 	  var progress = parseInt(((currentFile.loaded / currentFile.total) * 100), 10);
+	  $("#progress").html(progress);
+	  $("#progress-bar").css("width", progress.toString()+"%");
+		if (progress >= 99) $("#progress-ui").css("display", "none");
 	}
   }
   reader.onerror = function () {

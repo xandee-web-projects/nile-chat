@@ -13,6 +13,9 @@ label input {
     top: -2px;
     left: -700px;
 }
+#progress-ui{
+    display: none;
+}
 
 .responsive{
     width: 100%;
