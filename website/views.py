@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required, current_user
-from .models import Message, Chat, User
+from .models import Message, Chat
 from . import db, emit, socketio, join_room
 from .hash import hsh, h
 

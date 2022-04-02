@@ -8,6 +8,10 @@ function isTooDark(color) {
     const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
     return brightness > 20;
 }
+function messageScrollIntoView(){
+	const chat = $("#chat").children()
+	chat[chat.length-1].scrollIntoView();
+}
 
 function random_color(text) {
 	var randomColor = CryptoJS.MD5(text).toString().slice(0, 8);
@@ -78,7 +82,6 @@ $(document).ready(function () {
 	socket = io("http://" + document.domain + ":" + location.port + "/chat");
 	socket.on("connect", function () {
 		abbr.innerHTML = dept_abbr;
-		$("#chat").val("");
 		socket.emit("online");
 	});
 	socket.on("general_message", function (msg) {
@@ -92,6 +95,7 @@ $(document).ready(function () {
 		);
 	});
 	socket.on("get_messages", function (msgs) {
+		$("#chat").empty();
 		msgs.forEach(function (msg) {
 			const is_sender = msg.is_s;
 			const name = msg.is_s ? "You" : msg.s;
@@ -101,21 +105,22 @@ $(document).ready(function () {
 				$("#chat").prepend(img_msg(msg, is_sender, name));
 			}
 		});
-		$("#chat").children().slice(-1)[0].scrollIntoView();
+		messageScrollIntoView();
 		$("#message_holder").focus();
 	});
 	socket.on("new_message", function (msg) {
 		const is_sender = msg.s_id == current_user;
 		const name = is_sender ? "You" : msg.s;
 		$("#chat").append(msg_text(msg, is_sender, name));
-		$("#chat").children().slice(-1)[0].scrollIntoView();
+		messageScrollIntoView();
 	});
 
 	socket.on("new_image", (msg) => {
 		const is_sender = msg.s_id == current_user;
 		const name = is_sender ? "You" : msg.s;
 		$("#chat").append(img_msg(msg, is_sender, name));
-		$("#chat").children().slice(-1)[0].scrollIntoView();
+		messageScrollIntoView();
+
 	});
 	socket.on('disconnect', function(){
 		abbr.innerHTML = "Connecting ..."
