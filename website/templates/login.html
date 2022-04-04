@@ -12,10 +12,15 @@
     <link
       rel="stylesheet"
       href="https://unicons.iconscout.com/release/v2.1.9/css/unicons.css"
-    />
+      />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
     <link rel="icon" href="{{ url_for('static', filename='icon.png') }}"/>
-
+		<script src="{{ url_for('static', filename='login.js') }}"></script>
+		<script src="{{ url_for('static', filename='jquery/dist/jquery.min.js') }}"></script>
+    
   </head>
   <body>
       <div class="container">
@@ -38,34 +43,57 @@
                         {% endif %}
                         {% endwith %}
                         <h4 class="mb-4 pb-3">Log In</h4>
-						<form method="post">
-							<div class="form-group">
-							<input
-								type="text"
-								name="student_id"
-								class="form-style"
-								placeholder="Your student ID"
-								id="logemail"
-							/>
-							<i class="input-icon uil uil-at"></i>
-							</div>
-							<div class="form-group mt-2">
-							<input
-								type="password"
-								name="password"
-								class="form-style"
-								placeholder="Your Password"
-								id="logpass"
-							/>
-							<i class="input-icon uil uil-lock-alt"></i>
-							<input type="submit" value="Login" class="btn mt-4">
-						</form>
+                        <form method="post">
+                          <div class="form-group">
+                            <input
+                              type="text"
+                              name="student_id"
+                              class="form-style"
+                              placeholder="Your student ID"
+                              id="logemail"
+                              required
+                            />
+                            <i class="input-icon uil uil-user"></i>
+                          </div>
+                          <div class="form-group mt-2">
+                            <i class="input-icon uil uil-lock-alt"></i>
+                            <input
+                              type="password"
+                              name="password"
+                              class="form-style"
+                              placeholder="Your Password"
+                              id="logpass"
+                              required
+                            />
+                          </div>
+                          <input type="submit" value="Login" class="btn mt-4">
+                        </form>
+                        <button type="button" class="btn bg-transparent" style="box-shadow: none; color: white; top: 10px; position: relative;" data-toggle="modal" data-target="#aboutModal">About</button>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <!-- Modal -->
+        <div id="aboutModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title" style="text-align: center;">About</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <p style="color: black;">Here you can send  messages to your department mates without them knowing who you really are</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+        
           </div>
         </div>
       </div>

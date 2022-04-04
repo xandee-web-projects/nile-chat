@@ -82,6 +82,7 @@
 								id="message_holder"
 								placeholder="Type your message"
 							/>
+							<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#flamesModal"><i class="fa fa-balance-scale"></i></button>
 							<div class="btn btn-dark" style="padding-bottom: 0%;">
 								<label for="imageupload" class="fa fa-picture-o">
 									<input type="file" name="file" id="imageupload" accept="image/*" />
@@ -92,6 +93,30 @@
 							</button>
 						</div>
 					</div>
+					<div id="flamesModal" class="modal fade" role="dialog">
+						<div class="modal-dialog">
+						  <!-- Modal content-->
+						  <div class="modal-content">
+							<div class="modal-header">
+							  <h4 class="modal-title text-warning" style="text-align: center;">Flames <i class="fa fa-fire"></i></h4>
+							  <button type="button" class="close" id="close" data-dismiss="modal">&times;</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<input type="text" class="form-control" id="name1" placeholder="Name">
+								</div>
+								<div class="form-group">
+									<input type="text" class="form-control" id="name2" placeholder="Name">
+								</div>
+								<txt id="flamesResult"></txt>
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-warning" style="display: none;" id="shareFlames">Share <i class="fa fa-send" aria-hidden="true"></i></button>
+								<button class="btn btn-primary" id="calculate_flames">Result</button>
+							</div>
+						  </div>
+						</div>
+					  </div>
 				</div>
 			</div>
 		</main>

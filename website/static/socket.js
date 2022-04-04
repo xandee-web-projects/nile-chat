@@ -24,7 +24,6 @@ function random_color(text) {
 }
 function msg_text(msg, is_sender, name) {
 	const sent = is_sender ? "right" : "left";
-	const c = is_sender ? "r" : "l";
 	const opp_sent = is_sender ? "left" : "right";
 	const style = is_sender ? " style='text-align: right;'" : "";
 	const btn = `<button class="usernames text-nowrap font-weight-bold mb-1" style="color: ${random_color(name)};">${name}</button>`
@@ -45,7 +44,6 @@ function msg_text(msg, is_sender, name) {
 function img_msg(msg, is_sender, name) {
 	const sent = is_sender ? "right" : "left";
 	const opp_sent = is_sender ? "left" : "right";
-	const c = is_sender ? "r" : "l";
 	const style = is_sender ? " style='text-align: right;'" : "";
 	return `<div class="chat-message-${sent} pb-4">
                 <div>
@@ -61,6 +59,36 @@ function img_msg(msg, is_sender, name) {
 		msg.t
 	}</div>
                 </div>
+            </div>`;
+}
+function flames_msg(msg, is_sender, name) {
+	const sent = is_sender ? "right" : "left";
+	const opp_sent = is_sender ? "left" : "right";
+	const style = is_sender ? " style='text-align: right;'" : "";
+	const btn = `<button class="usernames text-nowrap font-weight-bold mb-1" style="color: ${random_color(name)};">${name}</button>`
+	const identicon = `<polkadot-web-identicon style="display: inline-block;" address="${msg.i}" theme="jdenticon" class="rounded-circle mr-1" size="25"></polkadot-web-identicon>`
+	var order = is_sender ? btn+identicon : identicon+btn
+	return `<div class="chat-message-${sent} pb-4">
+                <div class="flex-shrink-1 bg-dark rounded py-2 px-3" style="min-width:100%;">
+					<div ${style}>
+						${order}
+					</div>
+					<h5 class="text-warning">Flames <i class="fa fa-fire"></i></h5>
+					<div class="bg-secondary form-control" style="text-align: center;">
+						${msg.flames.n1}
+					</div>
+					<div class="form-control bg-transparent" style="text-align: center;border:none;">
+						<txt>&amp;</txt>
+					</div>
+					<div class="bg-secondary form-control" style="text-align: center;">
+						${msg.flames.n2}
+					</div>
+					<div class="form-control bg-transparent" style="text-align: center;border:none;">
+						${msg.flames.res}
+					</div>
+					<div class="text-muted small text-nowrap mt-2" style='text-align: ${opp_sent};'>${msg.t}</div>
+					</div>
+	            </div>
             </div>`;
 }
 function connect_btns() {
@@ -99,11 +127,9 @@ $(document).ready(function () {
 		msgs.forEach(function (msg) {
 			const is_sender = msg.is_s;
 			const name = msg.is_s ? "You" : msg.s;
-			if (msg.img == null) {
-				$("#chat").prepend(msg_text(msg, is_sender, name));
-			} else {
-				$("#chat").prepend(img_msg(msg, is_sender, name));
-			}
+			if (msg.msg) $("#chat").prepend(msg_text(msg, is_sender, name));
+			else if (msg.img) $("#chat").prepend(img_msg(msg, is_sender, name));
+			else if (msg.flames) $("#chat").prepend(flames_msg(msg, is_sender, name));
 		});
 		messageScrollIntoView();
 		$("#message_holder").focus();
@@ -114,13 +140,17 @@ $(document).ready(function () {
 		$("#chat").append(msg_text(msg, is_sender, name));
 		messageScrollIntoView();
 	});
-
 	socket.on("new_image", (msg) => {
 		const is_sender = msg.s_id == current_user;
 		const name = is_sender ? "You" : msg.s;
 		$("#chat").append(img_msg(msg, is_sender, name));
 		messageScrollIntoView();
-
+	});
+	socket.on("flames", (msg) => {
+		const is_sender = msg.s_id == current_user;
+		const name = is_sender ? "You" : msg.s;
+		$("#chat").append(flames_msg(msg, is_sender, name));
+		messageScrollIntoView();
 	});
 	socket.on('disconnect', function(){
 		abbr.innerHTML = "Connecting ..."

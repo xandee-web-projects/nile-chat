@@ -1,5 +1,6 @@
 ePWz8TXZH9URdBr
 
-date +%T -s "10:13:13"
+secretkey - 1f601a5ffe473ae4da49cd43ec646d3f
 
 
+done about and sensor of curse words

@@ -8,7 +8,7 @@ class Message(db.Model):
     data = db.Column(db.String(10000))
     sender = db.Column(db.String(32))
     sender_id = db.Column(db.String(32))
-    is_img = db.Column(db.Boolean, default=False)
+    type = db.Column(db.String(10))
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     chat_id = db.Column(db.Integer, db.ForeignKey('chat.id'))
 
