@@ -3,4 +3,4 @@ ePWz8TXZH9URdBr
 secretkey - 1f601a5ffe473ae4da49cd43ec646d3f
 
 
-done about and sensor of curse words
+About page and censor of curse words

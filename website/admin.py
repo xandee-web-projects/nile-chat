@@ -9,7 +9,7 @@ admin = Blueprint('admin', __name__)
 @login_required
 def _admin():
     if current_user.id != 211605045:
-        return redirect(url_for('admin.chat'))
+        return redirect(url_for('views.chat'))
     return render_template('admin/admin.html', groups=Chat.query.all(), total_users=User.query.count())
 
 @socketio.on('gen_msg', namespace='/chat')

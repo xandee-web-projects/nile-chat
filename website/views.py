@@ -5,7 +5,7 @@ from . import db, emit, socketio, join_room
 from .hash import hsh, h
 
 views = Blueprint('views', __name__)
-curse_words = ["breast", "boobs", "arsehole","asshole","balls","bint","bitch","bollocks","bullshit","feck","munter","shit","tits","bastard","bellend","bloodclaat","clunge","cock","Dick","Dickhead","fanny","flaps","gash","knob","minge","prick","punani","pussy","snatch","twat","cunt","fuck","motherfucker","fucker","prick","fuckin"]
+curse_words = ["breast", "boobs", "arsehole","asshole","balls","bint","bitch","bollocks","bullshit","feck","munter","shit","tits","bastard","bellend","bloodclaat","clunge","cock","dick","dickhead","fanny","flaps","gash","knob","minge","prick","punani","pussy","snatch","twat","cunt","fuck","motherfucker","fucker","prick","fuckin"]
 
 @views.route('/', methods=['GET', 'POST'])
 @login_required
