@@ -6,7 +6,7 @@ function isTooDark(color) {
     const c_g = parseInt(hex.substr(2, 2), 16);
     const c_b = parseInt(hex.substr(4, 2), 16);
     const brightness = ((c_r * 299) + (c_g * 587) + (c_b * 114)) / 1000;
-    return brightness > 20;
+    return brightness > 10;
 }
 function messageScrollIntoView(){
 	const chat = $("#chat").children()
@@ -30,7 +30,7 @@ function msg_text(msg, is_sender, name) {
 	const identicon = `<polkadot-web-identicon style="display: inline-block;" address="${msg.i}" theme="jdenticon" class="rounded-circle mr-1" size="25"></polkadot-web-identicon>`
 	var order = is_sender ? btn+identicon : identicon+btn
 	return `<div class="chat-message-${sent} pb-4">
-                <div class="flex-shrink-1 bg-dark rounded py-2 px-3">
+                <div class="flex-shrink-1 card-front rounded py-2 px-3">
 					<div ${style}>
 						${order}
 					</div>
@@ -48,7 +48,7 @@ function img_msg(msg, is_sender, name) {
 	return `<div class="chat-message-${sent} pb-4">
                 <div>
                 </div>
-                <div class="flex-shrink-1 bg-dark rounded py-2 px-3">
+                <div class="flex-shrink-1 card-front rounded py-2 px-3">
                 <div ${style}><button class="usernames text-nowrap font-weight-bold mb-1" style="color: ${random_color(
 		name
 	)}">${name}</button><polkadot-web-identicon style="display: inline-block;" address="${
@@ -69,7 +69,7 @@ function flames_msg(msg, is_sender, name) {
 	const identicon = `<polkadot-web-identicon style="display: inline-block;" address="${msg.i}" theme="jdenticon" class="rounded-circle mr-1" size="25"></polkadot-web-identicon>`
 	var order = is_sender ? btn+identicon : identicon+btn
 	return `<div class="chat-message-${sent} pb-4">
-                <div class="flex-shrink-1 bg-dark rounded py-2 px-3" style="min-width:100%;">
+                <div class="flex-shrink-1 card-front rounded flames py-2 px-3">
 					<div ${style}>
 						${order}
 					</div>
@@ -107,7 +107,7 @@ $(document).ready(function () {
 	connect_btns();
 	const abbr = document.getElementById("abbr");
 	const dept_abbr = abbr.innerHTML;
-	socket = io("http://" + document.domain + ":" + location.port + "/chat");
+	socket = io("https://" + document.domain + ":" + location.port + "/chat");
 	socket.on("connect", function () {
 		abbr.innerHTML = dept_abbr;
 		socket.emit("online");
@@ -115,12 +115,13 @@ $(document).ready(function () {
 	socket.on("general_message", function (msg) {
 		$("#chat").append(
 			`<div class="chat-message pb-4">
-				<div class="flex-shrink-1 bg-dark rounded py-2 px-3">
+				<div class="flex-shrink-1 card-front rounded py-2 px-3">
 					<div>-Anonymous chat</div>
 				${msg.msg}
 			</div>
 		</div>`
 		);
+		messageScrollIntoView();
 	});
 	socket.on("get_messages", function (msgs) {
 		$("#chat").empty();
